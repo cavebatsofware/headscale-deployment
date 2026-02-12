@@ -1,0 +1,67 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+*.tfvars
+*.tfplan
+.terraform/
+.terraform.lock.hcl
+*.tfvars
+!*.tfvars.example
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+deployment-config.json
+
+# Sensitive files
+*.pem
+*.key
+*credentials*
+*secrets*
+.env
+.env.*
+.envrc
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Ansible
+*.retry
+inventory/hosts
+inventory/group_vars/all/vault.yml
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+
+# Nix build outputs
+result-*
+
+# Build script config (user-specific)
+scripts/build-images.conf
+.build-images.conf
+
+# Go build artifacts
+tools/oci-image-builder/oci-image-builder
+
+# Rust build artifacts
+tools/oci-image-builder-rust-backup/target/
+
+# OCI Image Builder user-specific config files
+tools/oci-image-builder-rust-backup/scripts/oci-image-builder.toml
+!tools/oci-image-builder-rust-backup/scripts/oci-image-builder.toml.example

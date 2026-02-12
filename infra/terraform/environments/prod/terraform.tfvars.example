@@ -1,0 +1,104 @@
+# =============================================================================
+# Production Environment - Terraform Variables
+# =============================================================================
+# Copy this file to terraform.tfvars and fill in your values
+# DO NOT commit terraform.tfvars to version control
+# =============================================================================
+
+# =============================================================================
+# OCI Authentication
+# =============================================================================
+# Get these values from your OCI console:
+# https://cloud.oracle.com/identity/users/<user_ocid>/api-keys
+
+oci_tenancy_ocid     = "ocid1.tenancy.oc1..your-tenancy-ocid"
+oci_user_ocid        = "ocid1.user.oc1..your-user-ocid"
+oci_fingerprint      = "aa:bb:cc:dd:ee:ff:00:11:22:33:44:55:66:77:88:99"
+oci_private_key_path = "~/.oci/oci_api_key.pem"
+oci_compartment_ocid = "ocid1.compartment.oc1..your-compartment-ocid"
+
+# Regions
+oci_region_primary   = "us-ashburn-1"
+oci_region_secondary = "us-phoenix-1"
+
+# =============================================================================
+# AWS Authentication (for Route53)
+# =============================================================================
+# Create an IAM user with Route53 permissions
+
+aws_region     = "us-east-1"
+aws_access_key = "AKIAIOSFODNN7EXAMPLE"
+aws_secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+
+# =============================================================================
+# Domain Configuration
+# =============================================================================
+# Your domain must already be configured in Route53
+
+domain_name         = "example.com"
+route53_zone_id     = "Z1234567890EXAMPLE"
+headscale_subdomain = "headscale"
+keycloak_subdomain  = "keycloak"
+derp_east_subdomain = "derp-east"
+derp_west_subdomain = "derp-west"
+
+# =============================================================================
+# Network Configuration
+# =============================================================================
+
+vcn_cidr_block      = "10.0.0.0/16"
+public_subnet_cidr  = "10.0.1.0/24"
+private_subnet_cidr = "10.0.2.0/24"
+
+# =============================================================================
+# NixOS Image OCIDs
+# =============================================================================
+# Build images with: nix build .#oci-headscale-image (etc.)
+# Upload QCOW2 to OCI Object Storage, then import as Custom Image
+# Paste the resulting image OCIDs here
+
+# AMD64 image for Headscale (E2.1.Micro)
+headscale_image_ocid = "ocid1.image.oc1.iad.your-headscale-image-ocid"
+
+# ARM64 image for Keycloak (A1.Flex)
+keycloak_image_ocid = "ocid1.image.oc1.iad.your-keycloak-image-ocid"
+
+# ARM64 image for DERP East (A1.Flex)
+derp_image_ocid = "ocid1.image.oc1.iad.your-derp-image-ocid"
+
+# ARM64 image for DERP West (A1.Flex) - only needed if enable_secondary_region = true
+# derp_west_image_ocid = "ocid1.image.oc1.phx.your-derp-west-image-ocid"
+
+# =============================================================================
+# Compute Configuration
+# =============================================================================
+
+# Headscale (AMD64 - Free Tier)
+headscale_shape = "VM.Standard.E2.1.Micro"
+
+# DERP (ARM64 - Free Tier)
+derp_shape     = "VM.Standard.A1.Flex"
+derp_ocpus     = 1
+derp_memory_gb = 6
+
+# Keycloak + PostgreSQL (ARM64 - Free Tier)
+keycloak_shape     = "VM.Standard.A1.Flex"
+keycloak_ocpus     = 2
+keycloak_memory_gb = 12
+
+# SSH key for VM access
+ssh_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5... your-key"
+
+# =============================================================================
+# Feature Flags
+# =============================================================================
+
+enable_dns_health_checks = false
+enable_secondary_region  = false  # Phoenix region for DERP West
+
+# =============================================================================
+# Tags
+# =============================================================================
+
+project     = "headscale-deployment"
+environment = "prod"
